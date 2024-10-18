@@ -1,4 +1,4 @@
-package com.example.kotlincryptosample.util
+package com.example.kotlincryptosample.core.view.util
 
 import com.example.kotlincryptosample.R
 

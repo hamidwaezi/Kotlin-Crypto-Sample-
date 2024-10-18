@@ -1,9 +1,8 @@
 package com.example.kotlincryptosample.crypto.view.model
 
-import android.icu.number.NumberFormatter
 import androidx.annotation.DrawableRes
 import com.example.kotlincryptosample.crypto.domain.Coin
-import com.example.kotlincryptosample.util.getDrawableIdForCoin
+import com.example.kotlincryptosample.core.view.util.getDrawableIdForCoin
 import java.text.NumberFormat
 import java.util.Locale
 
