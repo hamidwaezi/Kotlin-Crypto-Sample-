@@ -71,6 +71,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kotlincryptosample.core.domain.util.onFail
 import com.example.kotlincryptosample.core.domain.util.onSuccess
 import com.example.kotlincryptosample.crypto.domain.CoinDataSource
+import com.example.kotlincryptosample.crypto.view.model.CoinUi
 import com.example.kotlincryptosample.crypto.view.model.toCoinUi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -80,6 +81,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
 class CoinListViewModel(
     private val coinDataSource: CoinDataSource
@@ -102,10 +104,26 @@ class CoinListViewModel(
                 _state.update {
                     it.copy(selected = action.coin)
                 }
+                loadHistory(action.coin)
             }
 
             else -> {
                 // todo
+            }
+        }
+    }
+
+    private fun loadHistory(coin: CoinUi) {
+        viewModelScope.launch {
+            coinDataSource.getCoinDetails(
+                coin.id,
+                start = ZonedDateTime.now().minusDays(5),
+                end = ZonedDateTime.now()
+            ).onSuccess {
+                Log.d("AAAAAAAAAAAAAAASuccess", it.toString())
+            }.onFail {
+                Log.d("AAAAAAAAAAAAAAAFail", it.toString())
+
             }
         }
     }
@@ -121,16 +139,15 @@ class CoinListViewModel(
             coinDataSource
                 .getCoins()
                 .onSuccess { coins ->
-                    Log.d("AAAAAAAAAAAAAAA", coins.toString())
+
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            coins = coins.map { it.toCoinUi() }
+                            coins = coins.map { coin -> coin.toCoinUi() }
                         )
                     }
                 }
                 .onFail { error ->
-                    Log.d("AAAAAAAAAAAAAAA", error.toString())
                     _state.update { it.copy(isLoading = false) }
                     _events.send(CoinListEvent.Error(error))
                 }
