@@ -10,7 +10,7 @@ data class CoinDto(
     val symbol: String,
     val name: String,
     val supply: Double,
-    val maxSupply: String,
+    val maxSupply: String?,
     val marketCapUsd: Double,
     val volumeUsd24Hr: Double,
     val priceUsd: Double,

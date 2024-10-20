@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -75,7 +77,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //K-tor
-//    val ktorVersion = "3.0.0"
+    val ktorVersion = "3.0.0"
 
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.core)
@@ -83,6 +85,7 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.cio)
 
     //Coroutines
 //    val coroutinesVersion = "1.9.0"
@@ -92,8 +95,10 @@ dependencies {
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
 
     //di
-//    val koinVersion = "3.5.3"
+    val koinVersion = "3.5.3"
     implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
 }
 java {
     toolchain {

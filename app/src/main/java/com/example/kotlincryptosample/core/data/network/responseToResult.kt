@@ -1,5 +1,6 @@
 package com.example.kotlincryptosample.core.data.network
 
+import android.util.Log
 import com.example.kotlincryptosample.core.domain.util.Result
 
 import com.example.kotlincryptosample.core.domain.util.NetworkError
@@ -16,6 +17,8 @@ suspend inline fun <reified T> responseToResult(response: HttpResponse): Result<
             try {
                 success(response.body<T>())
             } catch (ex: SerializationException) {
+                Log.d("AAAAAAAAAAAAAAA", ex.toString())
+
                 fail(NetworkError.Serialization(ex))
             } catch (ex: NoTransformationFoundException) {
                 fail(NetworkError.Serialization(ex))
