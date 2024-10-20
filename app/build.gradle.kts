@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.adaptive.navigation.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -99,9 +100,15 @@ dependencies {
     val koinVersion = "3.5.3"
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-
+    //coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    
+    //adaptive navigation 
+    implementation(libs.androidx.material3.adaptive.navigation.suite)
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.adaptive.layout)
+    implementation(libs.androidx.adaptive.navigation)
 
 }
 java {
