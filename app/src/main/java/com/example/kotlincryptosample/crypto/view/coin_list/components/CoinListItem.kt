@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.kotlincryptosample.crypto.domain.Coin
 import com.example.kotlincryptosample.crypto.view.model.CoinUi
 import com.example.kotlincryptosample.crypto.view.model.toCoinUi
@@ -42,11 +43,17 @@ fun CoinListItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Icon(
-            modifier = Modifier.size(60.dp),
-            imageVector = ImageVector.vectorResource(id = coinUi.iconRes),
-            contentDescription = coinUi.name,
-            tint = MaterialTheme.colorScheme.secondary,
+//        Icon(
+//            modifier = Modifier.size(60.dp),
+//            imageVector = ImageVector.vectorResource(id = coinUi.iconRes),
+//            contentDescription = coinUi.name,
+//            tint = MaterialTheme.colorScheme.secondary,
+//        )
+
+        AsyncImage(
+            model = coinUi.symbolUrl,
+            contentDescription = "Translated description of what the image contains",
+            modifier = modifier.size(60.dp)
         )
 
         Column(
@@ -55,6 +62,7 @@ fun CoinListItem(
             ) {
             Text(text = coinUi.symbol, style = MaterialTheme.typography.titleMedium)
             Text(text = coinUi.name, style = MaterialTheme.typography.titleSmall)
+
         }
         Column(
             modifier = Modifier.weight(1f),

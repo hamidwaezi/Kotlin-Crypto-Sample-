@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.kotlincryptosample.R
 import com.example.kotlincryptosample.crypto.domain.Coin
 import com.example.kotlincryptosample.crypto.view.coin_detail.components.DetailBox
@@ -53,12 +57,17 @@ fun CoinDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val coin = state.selected
-            Icon(
-                imageVector = ImageVector.vectorResource(coin.iconRes),
-                coin.name,
-                tint = MaterialTheme.colorScheme.primary,
-
-                )
+            AsyncImage(
+                model = coin.symbolUrl,
+                contentDescription = "Translated description of what the image contains",
+                modifier = modifier.size(90.dp)
+            )
+//            Icon(
+//                imageVector = ImageVector.vectorResource(coin.iconRes),
+//                coin.name,
+//                tint = MaterialTheme.colorScheme.primary,
+//
+//                )
             Text(
                 text = coin.name,
                 style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
@@ -67,25 +76,25 @@ fun CoinDetailScreen(
                 text = coin.symbol,
                 style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.secondary)
             )
-
+            Spacer(modifier.height(15.dp))
             FlowRow(horizontalArrangement = Arrangement.Center) {
                 DetailBox(
                     R.drawable.stock,
-                    "$ "+coin.marketCapUsd.formatted,
+                    "$ " + coin.marketCapUsd.formatted,
                     context.getString(R.string.market_cap),
                     modifier
 
                 )
                 DetailBox(
                     R.drawable.dollar,
-                    "$ "+coin.priceUsd.formatted,
+                    "$ " + coin.priceUsd.formatted,
                     context.getString(R.string.price),
                     modifier
                 )
                 val isUp = coin.changePercent24Hr.value > 0.0
                 DetailBox(
                     if (isUp) R.drawable.trending else R.drawable.trending_down,
-                    "$ "+(coin.priceUsd.value * (coin.changePercent24Hr.value / 100))
+                    "$ " + (coin.priceUsd.value * (coin.changePercent24Hr.value / 100))
                         .toDisplayableNumber().formatted,
                     context.getString(R.string.change_24_h),
                     modifier,

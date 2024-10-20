@@ -15,7 +15,9 @@ data class CoinUi(
     val priceUsd: DisplayableNumber,
     val changePercent24Hr: DisplayableNumber,
     @DrawableRes val iconRes: Int,
-)
+) {
+    val symbolUrl = "https://assets.coincap.io/assets/icons/${symbol.lowercase()}@2x.png"
+}
 
 data class DisplayableNumber(
     val value: Double,
