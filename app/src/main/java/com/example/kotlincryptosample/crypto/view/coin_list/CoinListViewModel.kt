@@ -72,9 +72,11 @@ import com.example.kotlincryptosample.core.domain.util.onFail
 import com.example.kotlincryptosample.core.domain.util.onSuccess
 import com.example.kotlincryptosample.crypto.domain.CoinDataSource
 import com.example.kotlincryptosample.crypto.view.model.toCoinUi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -91,11 +93,15 @@ class CoinListViewModel(
             SharingStarted.WhileSubscribed(5000L),
             CoinListState()
         )
+    private val _events = Channel<CoinListEvent> { }
+    val events = _events.receiveAsFlow()
 
     fun onAction(action: CoinListAction) {
         when (action) {
             is CoinListAction.OnCoinClick -> {
-                //toDo
+                _state.update {
+                    it.copy(selected = action.coin)
+                }
             }
 
             else -> {
@@ -126,6 +132,7 @@ class CoinListViewModel(
                 .onFail { error ->
                     Log.d("AAAAAAAAAAAAAAA", error.toString())
                     _state.update { it.copy(isLoading = false) }
+                    _events.send(CoinListEvent.Error(error))
                 }
         }
     }

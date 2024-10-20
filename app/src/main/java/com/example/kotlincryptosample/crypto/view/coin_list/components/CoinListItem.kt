@@ -48,6 +48,7 @@ fun CoinListItem(
             contentDescription = coinUi.name,
             tint = MaterialTheme.colorScheme.secondary,
         )
+
         Column(
             modifier = Modifier.weight(1f),
 
