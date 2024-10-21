@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.kotlincryptosample.R
 import com.example.kotlincryptosample.crypto.domain.Coin
+import com.example.kotlincryptosample.crypto.view.coin_detail.components.Chart1
 import com.example.kotlincryptosample.crypto.view.coin_detail.components.DetailBox
 import com.example.kotlincryptosample.crypto.view.coin_list.CoinListState
 import com.example.kotlincryptosample.crypto.view.model.toCoinUi
@@ -101,7 +102,16 @@ fun CoinDetailScreen(
                     if (!isUp) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
-
+            Spacer(modifier.height(20.dp))
+            if (coin.priceHistory.isNotEmpty())
+                Chart1(coin.priceHistory, modifier)
+            else
+                Box(
+                    modifier = modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
         }
     }
 }

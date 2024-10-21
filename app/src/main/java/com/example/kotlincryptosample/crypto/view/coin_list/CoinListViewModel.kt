@@ -72,6 +72,7 @@ import com.example.kotlincryptosample.core.domain.util.onFail
 import com.example.kotlincryptosample.core.domain.util.onSuccess
 import com.example.kotlincryptosample.crypto.domain.CoinDataSource
 import com.example.kotlincryptosample.crypto.view.model.CoinUi
+import com.example.kotlincryptosample.crypto.view.model.toCoinPriceUi
 import com.example.kotlincryptosample.crypto.view.model.toCoinUi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -119,8 +120,19 @@ class CoinListViewModel(
                 coin.id,
                 start = ZonedDateTime.now().minusDays(5),
                 end = ZonedDateTime.now()
-            ).onSuccess {
-                Log.d("AAAAAAAAAAAAAAASuccess", it.toString())
+            ).onSuccess { data ->
+                _state.update { state ->
+                    when (state.selected?.id) {
+                        coin.id -> {
+                            state.copy(selected = state.selected.copy(priceHistory = data.sortedBy { it.time }
+                                .map { it.toCoinPriceUi() }))
+                        }
+
+                        else -> {
+                            state
+                        }
+                    }
+                }
             }.onFail {
                 Log.d("AAAAAAAAAAAAAAAFail", it.toString())
 

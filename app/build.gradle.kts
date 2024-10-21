@@ -79,7 +79,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //K-tor
-    val ktorVersion = "3.0.0"
+//    val ktorVersion = "3.0.0"
 
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.core)
@@ -97,7 +97,7 @@ dependencies {
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
 
     //di
-    val koinVersion = "3.5.3"
+//    val koinVersion = "3.5.3"
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     //coil
@@ -109,6 +109,12 @@ dependencies {
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
+
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m2)
+    implementation(libs.vico.compose.m3)
+    implementation(libs.vico.core)
+    implementation(libs.vico.views)
 
 }
 java {
